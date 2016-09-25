@@ -1,9 +1,12 @@
 # mve
+
 Code for various internet of things projects.  Will eventually contain 
 generally useful python modules for IOT related projects, as well as
 the main source code for various hardward devices.
 
 The goal is to provide usable code as well as ideas for other projects.
+
+See the blog at http://manvselectron.blogspot.com
 
 # Directories
 
