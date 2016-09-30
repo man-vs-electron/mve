@@ -14,14 +14,20 @@ hours.
 * Raspberry Pi - I'm using a Raspberry Pi 1 Model B.  Any model
 should work, but the STL files I have include a board with bolt
 holes designed to line up with
+  * https://www.adafruit.com/products/998
 * PIR Sensor - used for motion detection
+  * https://www.adafruit.com/products/189
 * LED's - three, each used for indicating state and when
 * Camera - night vision camera with built-in infrared LEDs
-* Battery -
+  * https://amzn.com/B00N9YWLHE
+* Battery
+  * https://www.adafruit.com/products/353
 * Battery Charger and Power Supply
+  * https://www.adafruit.com/products/2465
 * Wiring -
-* Power Button - 
-* Enclosure - 
+  * https://www.adafruit.com/products/266
+* Power Button -
+* Enclosure - See the included STL files
 
 # Software
 
@@ -43,3 +49,4 @@ when running the software.  Then it will use your callbacks rather
 than using the one that's included.  This also makes it easy to use
 the scripts in this repo directly while still allowing you to write
 your own behavior.
+
