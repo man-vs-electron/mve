@@ -44,7 +44,7 @@ def register(component_name, multicast_ip='224.3.29.71', multicast_port=10000):
                 data, server = sock.recvfrom(16)
                 if data.startswith("monitor"):
                     eprint("Found the monitor on %s" % (str(server)))
-                return server[0]
+                return (data, server[0])
             except socket.timeout:
                 eprint('timed out, still waiting')
                 time.sleep(2)
@@ -96,8 +96,11 @@ def udp_server(callback, multicast_ip='224.3.29.71', server_port=10000):
             eprint('sending acknowledgement to', address)
 
             response = callback(data, address)
-            
-            sock.sendto(response, address)
+
+            if response is not None:            
+                sock.sendto(response, address)
+            else:
+                eprint("response was none. not replying")
 
         else:
            eprint('received invalid data (%s) from %s' % (data, address[0]))
