@@ -1,5 +1,6 @@
 from __future__ import print_function
 import sys
+import netifaces
 
 def eprint(*args, **kwargs):
     """Print to stderr
@@ -11,3 +12,12 @@ def eprint(*args, **kwargs):
     Taken from: http://stackoverflow.com/questions/5574702/how-to-print-to-stderr-in-python
     """
     print(*args, file=sys.stderr, **kwargs)
+
+def my_mac(interface="wlan0"):
+    """Get the mac address for the specified interface.
+    
+    Arguments
+    =========
+    interface - the network interface of interest
+    """
+    return netifaces.ifaddresses(interface)[netifaces.AF_LINK][0]['addr']    
