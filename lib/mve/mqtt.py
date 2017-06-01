@@ -2,6 +2,7 @@ from __future__ import print_function
 
 import paho.mqtt.client as paho
 import mve.udp
+import mve.utils
 import time
 import json
 
@@ -62,12 +63,16 @@ class Client(object):
         The payloads will be decoded using json.
         '''
         topic = message.topic
-        payload = json.loads(message.payload)
-        for criteria, callback in self.callback_list:
-            if criteria(topic, payload):
-                callback(topic, payload)
-                if self.first_only:
-                    return 
+        try:
+            payload = json.loads(message.payload)
+        except:
+            mve.utils.eprint("Error decoding payload as JSON. Skipping message.  Topic=%s, Payload=%s" % (topic, str(message.payload)))
+        else:
+            for criteria, callback in self.callback_list:
+                if criteria(topic, payload):
+                    callback(topic, payload)
+                    if self.first_only:
+                        return
             
     def connect(self):
         '''Connect to the server.
