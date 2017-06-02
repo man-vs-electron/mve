@@ -1,3 +1,5 @@
+# Adapted from https://pymotw.com/2/socket/multicast.html
+
 import socket
 import struct
 import sys
@@ -42,8 +44,6 @@ def register(component_name, multicast_ip='224.3.29.71', multicast_port=10000):
             eprint('waiting to receive')
             try:
                 data, server = sock.recvfrom(16)
-                if data.startswith("monitor"):
-                    eprint("Found the monitor on %s" % (str(server)))
                 return (data, server[0])
             except socket.timeout:
                 eprint('timed out, still waiting')
