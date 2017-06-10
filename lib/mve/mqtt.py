@@ -117,9 +117,15 @@ class Client(object):
         self.client.disconnect()
         self.client.loop_stop()
 
-    def publish(self, topic, payload):
+    def publish(self, topic, payload, retain=False):
         '''Publish some payload to a topic.
 
         The payload will be encoded using json.
+
+        Arguments
+        =========
+        topic - the topic to publish
+        payload - the payload to publish.  Will be dumped to json
+        retain - whether to mark the MQTT message as retain
         '''
-        self.client.publish(topic, json.dumps(payload))
+        self.client.publish(topic, json.dumps(payload), retain=retain)
