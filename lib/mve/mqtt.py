@@ -18,7 +18,7 @@ _default_callback_list = [(always_true, print_message)]
 class Client(object):
 
     def __init__(self, client_name, subscriptions = [], callback_list = _default_callback_list, first_only = True, verbose=True):
-        '''Create a new mqtt client
+        """Create a new mqtt client
         
         This convenience class wraps up desired supscriptions and 
         how to handle messages.  It auto-discovers where the hub is
@@ -38,7 +38,7 @@ class Client(object):
               when it hits the first true.  Otherwise it will always check
               all everything on the callback_list
         verbose - If true, print out error messages.
-        '''
+        """
         response, hub_ip = mve.udp.register(client_name)
         self.verbose=verbose
         self.first_only = first_only
@@ -50,18 +50,18 @@ class Client(object):
         self.hub_ip = hub_ip
 
     def on_connect(self, client, userdata, flags, rc):
-        '''Subscribes to everything passed in via subscriptions
-        '''
+        """Subscribes to everything passed in via subscriptions
+        """
         for subscription in self.subscriptions:
             if self.verbose:
                 print("Subscribing to %s" % subscription)
             client.subscribe(subscription)
 
     def on_message(self, client, userdata, message):
-        '''Check the callbacks when a message is received
+        """Check the callbacks when a message is received
 
         The payloads will be decoded using json.
-        '''
+        """
         topic = message.topic
         try:
             payload = json.loads(message.payload)
@@ -75,11 +75,11 @@ class Client(object):
                         return
             
     def connect(self):
-        '''Connect to the server.
+        """Connect to the server.
 
         It will have been discovered via UPD using the
         constructor.
-        '''
+        """
         self.client = paho.Client(self.client_name)
         self.client.on_connect=self.on_connect
         self.client.on_message = self.on_message
@@ -95,13 +95,13 @@ class Client(object):
             return False
 
     def connect_stubborn(self):
-        '''Keep trying to connect until successful.
+        """Keep trying to connect until successful.
 
         If connecting fails, sleep for one second and
         then try again.  Useful if recovering from
         a power outage and the client starts before the
         server.
-        '''
+        """
         if self.verbose:
             print("Connecting")
         while not self.connect():
@@ -112,13 +112,13 @@ class Client(object):
             print("Connected")
 
     def disconnect(self):
-        '''Disconnect and stop the processing loop
-        '''
+        """Disconnect and stop the processing loop
+        """
         self.client.disconnect()
         self.client.loop_stop()
 
     def publish(self, topic, payload, retain=False):
-        '''Publish some payload to a topic.
+        """Publish some payload to a topic.
 
         The payload will be encoded using json.
 
@@ -127,5 +127,5 @@ class Client(object):
         topic - the topic to publish
         payload - the payload to publish.  Will be dumped to json
         retain - whether to mark the MQTT message as retain
-        '''
+        """
         self.client.publish(topic, json.dumps(payload), retain=retain)
