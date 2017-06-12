@@ -48,6 +48,7 @@ class MyHandler(BaseHTTPServer.BaseHTTPRequestHandler):
                 s.send_response(404)
                 s.end_headers()
                 eprint("Error.  No Such Module: %s" % s.path)
+                s.wfile.close()
         except:
             e = sys.exc_info()[0]
             traceback.print_exc()
