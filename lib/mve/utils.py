@@ -39,3 +39,8 @@ def force_printable(s):
     return a "string_escape" encoded version of the string.
     """
     return s if is_printable(s) else s.encode("string_escape")
+
+def cls(num_lines=100):
+    """Clear the screen by printing n lines
+    """
+    print ("\n"*num_lines)
