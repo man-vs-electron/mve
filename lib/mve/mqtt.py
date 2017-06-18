@@ -64,7 +64,7 @@ class Client(object):
         """
         topic = message.topic
         try:
-            payload = json.loads(message.payload)
+            payload = None if message.payload is None else json.loads(message.payload)
         except:
             mve.utils.eprint("Error decoding payload as JSON. Skipping message.  Topic=%s, Payload=%s" % (topic, str(message.payload)))
         else:
