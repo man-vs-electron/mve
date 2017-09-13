@@ -66,13 +66,14 @@ class Client(object):
         try:
             payload = None if message.payload is None else json.loads(message.payload)
         except:
-            mve.utils.eprint("Error decoding payload as JSON. Skipping message.  Topic=%s, Payload=%s" % (topic, str(message.payload)))
-        else:
-            for criteria, callback in self.callback_list:
-                if criteria(topic, payload):
-                    callback(topic, payload)
-                    if self.first_only:
-                        return
+            payload = str(message.payload)
+            #mve.utils.eprint("Error decoding payload as JSON. Skipping message.  Topic=%s, Payload=%s" % (topic, str(message.payload)))
+
+        for criteria, callback in self.callback_list:
+            if criteria(topic, payload):
+                callback(topic, payload)
+                if self.first_only:
+                    return
             
     def connect(self):
         """Connect to the server.
@@ -117,7 +118,7 @@ class Client(object):
         self.client.disconnect()
         self.client.loop_stop()
 
-    def publish(self, topic, payload, retain=False):
+    def publish(self, topic, payload, retain=False, json_payload=True):
         """Publish some payload to a topic.
 
         The payload will be encoded using json.
@@ -128,4 +129,4 @@ class Client(object):
         payload - the payload to publish.  Will be dumped to json
         retain - whether to mark the MQTT message as retain
         """
-        self.client.publish(topic, json.dumps(payload), retain=retain)
+        self.client.publish(topic, json.dumps(payload) if json_payload else str(payload), retain=retain)
