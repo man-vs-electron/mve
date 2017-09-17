@@ -2,6 +2,21 @@ from __future__ import print_function
 import sys
 import netifaces
 import string
+from astral import Astral
+from datetime import datetime
+
+def sunrise_sunset(city_name, which_day=datetime.now()):
+    """Get the Sunrise and sunset for the given city
+
+    Uses the astral library (from Pip).
+    
+    Arguments
+    =========
+    city_name - must be a city that astral knows about
+    which_date - datetime object for the day of interest.  By default, uses the current date
+    """
+    s =  Astral()[city_name].sun(which_day, local=True)
+    return [s["sunrise"], s["sunset"]]
 
 def eprint(*args, **kwargs):
     """Print to stderr
